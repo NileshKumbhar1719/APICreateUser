@@ -17,6 +17,8 @@ public partial class TblUser
 
     public string? Address { get; set; }
 
+
+
     public DateTime CreatedDate { get; set; }
 
     public virtual ICollection<TblUserIp> TblUserIps { get; set; } = new List<TblUserIp>();
