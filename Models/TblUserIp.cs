@@ -11,7 +11,7 @@ public partial class TblUserIp
 
     public string? Ipaddress { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+   
 
-    public virtual TblUser? User { get; set; }
+    public TblUser User { get; set; }
 }

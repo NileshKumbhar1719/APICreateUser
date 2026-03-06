@@ -1,6 +1,8 @@
-﻿using APICreateUser.Repository;
+﻿using APICreateUser.DTO;
+using APICreateUser.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace APICreateUser.Controllers
 {
@@ -15,22 +17,26 @@ namespace APICreateUser.Controllers
            _repogitoty = repository;
         }
         [HttpPost("RegisterUser")]
-        public async Task<IActionResult> RegisterUser([FromBody] DTO.RegisterUserDto registerUserDto)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
         {
-            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
-            await _repogitoty.RegisterUser(registerUserDto, ip);
+            var result = await _repogitoty.RegisterUser(registerUserDto);
+
+            
+
             return Ok("User registered successfully");
         }
         [HttpPut("UpdateUser/{id}")]
-        public async Task<IActionResult> UpdateUser([FromBody] Models.TblUser tblUser ,int id)
+        public async Task<IActionResult> UpdateUser( [FromBody] UpdateUser update,int id)
         {
-            var user = await _repogitoty.GetUserById(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                await _repogitoty.UpdateUser(update,id);
+                return Ok(new { message = "User updated successfully" });
             }
-            await _repogitoty.UpdateUser(tblUser);
-            return Ok("User updated successfully");
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
         [HttpGet("GetUserById/{id}")]
         public async Task<IActionResult> GetUserById(int id)
@@ -53,6 +59,12 @@ namespace APICreateUser.Controllers
         {
             await _repogitoty.DeleteUser(id);
             return Ok("User deleted successfully");
+        }
+        [HttpGet("GetAlIps")]
+        public async Task<IActionResult> GetAlIps()
+        {
+            var users = await _repogitoty.GetUserIPs();
+            return Ok(users);
         }
     }
 }

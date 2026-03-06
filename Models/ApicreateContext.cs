@@ -45,16 +45,16 @@ public partial class ApicreateContext : DbContext
 
             entity.ToTable("tblUserIP");
 
-            entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            //entity.Property(e => e.CreatedDate)
+            //    .HasDefaultValueSql("(getdate())")
+            //    .HasColumnType("datetime");
             entity.Property(e => e.Ipaddress)
                 .HasMaxLength(50)
                 .HasColumnName("IPAddress");
 
-            entity.HasOne(d => d.User).WithMany(p => p.TblUserIps)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__tblUserIP__UserI__3C69FB99");
+            //entity.HasOne(d => d.User).WithMany(p => p.TblUserIps)
+            //    .HasForeignKey(d => d.UserId)
+            //    .HasConstraintName("FK__tblUserIP__UserI__3C69FB99");
         });
 
         OnModelCreatingPartial(modelBuilder);

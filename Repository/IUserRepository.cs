@@ -5,11 +5,14 @@ namespace APICreateUser.Repository
 {
     public interface IUserRepository
     {
-        Task RegisterUser(RegisterUserDto registerUserDto,string ip);
-        Task UpdateUser(TblUser tblUser );
+        Task<string> RegisterUser(RegisterUserDto registerUserDto);
+        Task UpdateUser(UpdateUser update,int id );
         Task<TblUser> GetUserById(int id);
 
         Task<List<TblUser>> GetAllUsers();
         Task DeleteUser(int id);
+
+        Task<List<TblUserIp>> GetUserIPs();
+
     }
 }

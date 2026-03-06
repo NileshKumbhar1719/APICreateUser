@@ -13,13 +13,14 @@ public partial class TblUser
 
     public string Password { get; set; } = null!;
 
-    public DateOnly? Birthdate { get; set; }
+    public DateTime Birthdate { get; set; }
 
     public string? Address { get; set; }
 
 
 
     public DateTime CreatedDate { get; set; }
+    
 
-    public virtual ICollection<TblUserIp> TblUserIps { get; set; } = new List<TblUserIp>();
+    public List<TblUserIp> UserIps { get; set; } 
 }
